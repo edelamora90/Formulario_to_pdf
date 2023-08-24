@@ -1,0 +1,65 @@
+/* Estilo para el body para centrar el formulario verticalmente */
+
+body {
+ 
+    margin: 0;               /* Remueve márgenes por defecto */
+    padding: 0;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;               /* Establece el ancho del formulario al 80% del contenedor (que es el body en este caso) */
+    margin: 0 auto;           /* Centra el formulario horizontalmente */
+}
+
+.logoTitle {
+  display: flex;        /* Convierte el div en un contenedor flex */
+  justify-content: center; /* Centra los elementos hijos horizontalmente */
+  align-items: center;     /* Centra los elementos hijos verticalmente */
+  padding: 20px;           /* Añade algo de espacio alrededor para respirar */
+  text-align: center;      /* Esto centrará el texto del h2 si se cae a una nueva línea */
+}
+
+.logo {
+  margin-right: 20px;   /* Añade espacio a la derecha del logo para separarlo del título */
+  height: 50px;         /* Ejemplo de altura para el logo, ajústalo según tus necesidades */
+}
+
+h2 {
+  margin: 0;            /* Remueve el margen por defecto del h2 */
+}
+
+.input-group {
+    flex: 1;
+    min-width: 50%;
+    box-sizing: border-box;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    
+}
+input[type="text"], input[type="tel"], input[type="email"]{
+  border-radius: 10px;
+}
+
+label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+}
+
+input[type="submit"] {
+  display: block;          /* Hace que el botón ocupe toda la línea */
+  width: 20%;              /* Ancho al 20% del contenedor padre */
+  margin: 20px auto 0;     /* Margen superior de 20px y centrado horizontalmente */
+  padding: 10px;           /* Espaciado interno para darle algo de altura y comodidad */
+  border-radius: 20px;      /* Esquinas redondeadas al 15% */
+  border: none;            /* Remover bordes por defecto */
+  background-color: #007BFF; /* Color de fondo, puedes ajustar a tu preferencia */
+  color: white;            /* Color del texto, puedes ajustar a tu preferencia */
+  cursor: pointer;         /* Cambia el cursor al pasar sobre el botón */
+  font-size: 1em;          /* Tamaño del texto, ajustar según necesidad */
+}
+input[type="submit"]:hover {
+  background-color: #0056b3; /* Color de fondo un poco más oscuro */
+}

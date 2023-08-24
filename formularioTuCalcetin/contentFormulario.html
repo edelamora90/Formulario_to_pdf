@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario TuCalcetin</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h2>Formulario TuCalcetin</h2>
+    <form method="post" action="guardarDatosTuCalcetin.php">
+        <label for="fecha_tucalcetin">Fecha:</label>
+        <input type="date" name="fecha_tucalcetin" required><br><br>
+
+        <table>
+            <tr>
+                <th>Concepto</th>
+                <th>Cantidad</th>
+                <th>Costo</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="concepto_tucalcetin[]" required></td>
+                <td><input type="number" name="cantidad_tucalcetin[]" required></td>
+                <td><input type="number" name="costo_tucalcetin[]" required></td>
+            </tr>
+            <!-- Más filas de productos se agregarán con JavaScript -->
+        </table>
+
+        <br>
+        <button type="button" id="agregarProducto">Agregar Producto</button>
+        <br><br>
+
+        <label>Subtotal: <span id="subtotal">0.00</span></label><br>
+        <label>IVA (16%): <span id="iva">0.00</span></label><br>
+        <label>Total: <span id="total">0.00</span></label><br><br>
+
+        <input type="hidden" name="subtotal" id="subtotalInput">
+        <input type="hidden" name="iva" id="ivaInput">
+        <input type="hidden" name="total" id="totalInput">
+
+        <label for="tiempo_estimado_tucalcetin">Tiempo estimado:</label>
+        <input type="text" name="tiempo_estimado_tucalcetin"><br><br>
+
+        <label for="adicionales_tucalcetin">Notas Adicionales:</label><br>
+        <textarea name="adicionales_tucalcetin" rows="4" cols="50"></textarea><br><br>
+
+        <label for="minimos_de_orden">El costo acordado en la presente cotización está condicionado a un:</label><br>
+        <textarea name="minimos_de_orden" rows="4" cols="50"></textarea><br><br>
+
+        <input type="submit" value="Guardar">
+    </form>
+
+  <script>
+    // Código JavaScript para cálculos y agregar productos
+    const tablaProductos = document.querySelector('table');
+    const subtotalSpan = document.getElementById('subtotal');
+    const ivaSpan = document.getElementById('iva');
+    const totalSpan = document.getElementById('total');
+    const agregarProductoButton = document.getElementById('agregarProducto');
+
+    function calcularTotales() {
+    let subtotal = 0;
+
+    const filasProductos = tablaProductos.querySelectorAll('tr');
+    
+    for (let i = 1; i < filasProductos.length; i++) {
+        const fila = filasProductos[i];
+        const costoInput = fila.querySelector('input[name^="costo_tucalcetin["]');
+        const cantidadInput = fila.querySelector('input[name^="cantidad_tucalcetin["]');
+
+        const costo = parseFloat(costoInput.value);
+        const cantidad = parseFloat(cantidadInput.value);
+
+        if (!isNaN(costo) && !isNaN(cantidad)) {
+            subtotal += costo * cantidad;
+        }
+    }
+
+    const iva = subtotal * 0.16;
+    const total = subtotal + iva;
+
+    subtotalSpan.textContent = subtotal.toFixed(2);
+    ivaSpan.textContent = iva.toFixed(2);
+    totalSpan.textContent = total.toFixed(2);
+
+    // Actualiza los valores de los campos ocultos
+    document.getElementById('subtotalInput').value = subtotal.toFixed(2);
+    document.getElementById('ivaInput').value = iva.toFixed(2);
+    document.getElementById('totalInput').value = total.toFixed(2);
+}
+
+    agregarProductoButton.addEventListener('click', function() {
+        const nuevaFila = document.createElement('tr');
+        nuevaFila.innerHTML = `
+            <td><input type="text" name="concepto_tucalcetin[]" required></td>
+            <td><input type="number" name="cantidad_tucalcetin[]" required></td>
+            <td><input type="number" name="costo_tucalcetin[]" required></td>
+        `;
+        tablaProductos.appendChild(nuevaFila);
+    });
+
+    tablaProductos.addEventListener('change', calcularTotales);
+  </script>
+    
+</body>
+</html>
